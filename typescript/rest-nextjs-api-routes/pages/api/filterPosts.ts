@@ -9,10 +9,10 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
     where: {
       OR: [
         {
-          title: { contains: searchString },
+          title: { contains: searchString as string },
         },
         {
-          content: { contains: searchString },
+          content: { contains: searchString as string },
         },
       ],
     },

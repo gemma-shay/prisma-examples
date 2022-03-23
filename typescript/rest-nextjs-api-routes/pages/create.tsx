@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Layout from '../components/Layout'
 import Router from 'next/router'
+import { assetPrefix } from '../next.config'
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState('')
@@ -11,7 +12,7 @@ const Draft: React.FC = () => {
     e.preventDefault()
     try {
       const body = { title, content, authorEmail }
-      await fetch(`http://localhost:3000/api/post`, {
+      await fetch(`${assetPrefix}/api/post`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

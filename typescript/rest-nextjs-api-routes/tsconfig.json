@@ -16,7 +16,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "incremental": true
   },
   "exclude": [
     "node_modules"
@@ -25,7 +26,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "next.config.js"  ],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"

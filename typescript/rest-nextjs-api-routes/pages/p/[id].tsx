@@ -4,16 +4,17 @@ import ReactMarkdown from 'react-markdown'
 import Layout from '../../components/Layout'
 import Router from 'next/router'
 import { PostProps } from '../../components/Post'
+import { assetPrefix } from "../../next.config"
 
-async function publish(id: number): Promise<void> {
-  await fetch(`http://localhost:3000/api/publish/${id}`, {
+async function publish(id: string): Promise<void> {
+  await fetch(`${assetPrefix}/api/publish/${id}`, {
     method: 'PUT',
   })
   await Router.push('/')
 }
 
-async function destroy(id: number): Promise<void> {
-  await fetch(`http://localhost:3000/api/post/${id}`, {
+async function destroy(id: string): Promise<void> {
+  await fetch(`${assetPrefix}/api/post/${id}`, {
     method: 'DELETE',
   })
   await Router.push('/')
@@ -66,7 +67,7 @@ const Post: React.FC<PostProps> = props => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const res = await fetch(`http://localhost:3000/api/post/${context.params.id}`)
+  const res = await fetch(`${assetPrefix}/api/post/${context.params.id}`)
   const data = await res.json()
   return { props: { ...data } }
 }

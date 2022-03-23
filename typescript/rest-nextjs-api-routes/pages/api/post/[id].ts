@@ -16,7 +16,7 @@ export default async function handle(req: NextApiRequest, res: NextApiResponse) 
 // DELETE /api/post/:id
 async function handleDELETE(postId, res) {
   const post = await prisma.post.delete({
-    where: { id: Number(postId) },
+    where: { id: String(postId) },
   })
   res.json(post)
 }

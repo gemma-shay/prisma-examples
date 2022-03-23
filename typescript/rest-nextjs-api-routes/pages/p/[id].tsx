@@ -7,14 +7,14 @@ import { PostProps } from '../../components/Post'
 import { makeSerializable } from '../../lib/util'
 import prisma from '../../lib/prisma'
 
-async function publish(id: number): Promise<void> {
+async function publish(id: string): Promise<void> {
   await fetch(`/api/publish/${id}`, {
     method: 'PUT',
   })
   await Router.push('/')
 }
 
-async function destroy(id: number): Promise<void> {
+async function destroy(id: string): Promise<void> {
   await fetch(`/api/post/${id}`, {
     method: 'DELETE',
   })
@@ -68,7 +68,7 @@ const Post: React.FC<PostProps> = props => {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const id = Number(Array.isArray(context.params.id) ? context.params.id[0] : context.params.id)
+  const id = Array.isArray(context.params.id) ? context.params.id[0] : context.params.id
   const post = await prisma.post.findUnique({
     where: { id },
     include: { author: true },

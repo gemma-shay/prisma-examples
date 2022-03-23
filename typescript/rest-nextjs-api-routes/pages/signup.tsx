@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Router from 'next/router'
 import Layout from '../components/Layout'
+import { assetPrefix } from '../next.config'
 
 const SignUp: React.FC = () => {
   const [name, setName] = useState('')
@@ -10,7 +11,7 @@ const SignUp: React.FC = () => {
     e.preventDefault()
     try {
       const body = { name, email }
-      await fetch(`http://localhost:3000/api/user`, {
+      await fetch(`${assetPrefix}/api/user`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),

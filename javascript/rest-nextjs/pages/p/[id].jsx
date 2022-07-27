@@ -1,16 +1,17 @@
 import ReactMarkdown from 'react-markdown'
 import Layout from '../../components/Layout'
 import Router from 'next/router'
+import { getByID } from '../api/post/[id]'
 
 async function publish(id) {
-  await fetch(`http://localhost:3000/api/publish/${id}`, {
+  await fetch(`${location.origin}/api/publish/${id}`, {
     method: 'PUT',
   })
   await Router.push('/')
 }
 
 async function destroy(id) {
-  await fetch(`http://localhost:3000/api/post/${id}`, {
+  await fetch(`${location.origin}/api/post/${id}`, {
     method: 'DELETE',
   })
   await Router.push('/')
@@ -61,9 +62,10 @@ const Post = props => {
 }
 
 export const getServerSideProps = async (context) => {
-  const res = await fetch(`http://localhost:3000/api/post/${context.params.id}`)
-  const data = await res.json()
-  return { props: { ...data } }
+  const post = await getByID(context.params.id)
+  // make posts object serializable
+  // https://stackoverflow.com/questions/70449092/reason-object-object-date-cannot-be-serialized-as-json-please-only-ret
+  return { props: { ...JSON.parse(JSON.stringify(post)) } }
 }
 
 export default Post

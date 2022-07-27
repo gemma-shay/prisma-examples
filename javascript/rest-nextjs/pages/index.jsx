@@ -1,5 +1,6 @@
 import Layout from '../components/Layout'
 import Post from '../components/Post'
+import { getFeed } from './api/feed'
 
 const Blog = props => {
   return (
@@ -33,10 +34,11 @@ const Blog = props => {
 }
 
 export const getServerSideProps = async () => {
-  const res = await fetch('http://localhost:3000/api/feed')
-  const feed = await res.json()
+  const feed = await getFeed();
   return {
-    props: { feed },
+    // make feed serializable
+    // https://stackoverflow.com/questions/70449092/reason-object-object-date-cannot-be-serialized-as-json-please-only-ret
+    props: { feed: JSON.parse(JSON.stringify(feed)) },
   }
 }
 

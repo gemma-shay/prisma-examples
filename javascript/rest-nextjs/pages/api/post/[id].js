@@ -14,19 +14,27 @@ export default async function handle(req, res) {
   }
 }
 
-// GET /api/post/:id
-async function handleGET(postId, res) {
-  const post = await prisma.post.findUnique({
+export function getByID(postId) {
+  return prisma.post.findUnique({
     where: { id: postId },
     include: { author: true },
   })
+}
+
+export function deleteById(postId) {
+  return prisma.post.delete({
+    where: { id: postId },
+  })
+}
+
+// GET /api/post/:id
+async function handleGET(postId, res) {
+  const post = await getByID(postId)
   res.json(post)
 }
 
 // DELETE /api/post/:id
 async function handleDELETE(postId, res) {
-  const post = await prisma.post.delete({
-    where: { id: postId },
-  })
+  const post = await deleteById(postId)
   res.json(post)
 }

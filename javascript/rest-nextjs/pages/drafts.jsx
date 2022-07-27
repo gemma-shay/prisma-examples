@@ -1,5 +1,6 @@
 import Layout from '../components/Layout'
 import Post from '../components/Post'
+import { getDrafts } from './api/drafts'
 
 const Drafts = props => {
   return (
@@ -33,10 +34,11 @@ const Drafts = props => {
 }
 
 export const getServerSideProps = async () => {
-  const res = await fetch('http://localhost:3000/api/drafts')
-  const drafts = await res.json()
+  const drafts = await getDrafts();
   return {
-    props: { drafts },
+    // make drafts object serializable
+    // https://stackoverflow.com/questions/70449092/reason-object-object-date-cannot-be-serialized-as-json-please-only-ret
+    props: { drafts: JSON.parse(JSON.stringify(drafts)) },
   }
 }
 

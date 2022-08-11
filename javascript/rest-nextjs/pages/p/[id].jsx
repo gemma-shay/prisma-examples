@@ -64,7 +64,7 @@ const Post = props => {
 
 export const getServerSideProps = async (context) => {
   const post = await prisma.post.findUnique({
-    where: { id: Number(context.params.id) },
+    where: { id: context.params.id },
     include: { author: true },
   })
   return { props: { ...makeSerializable(post) } }
